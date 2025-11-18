@@ -2,16 +2,35 @@
 A set of tools, scripts, and helper modules for TidalCycles, Strudel, and other livecoding environments. All code in this repository is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
 
 ## PitchSample
-A Haskell module that exports a single function, `pitchSample`. This function takes two arguments:
-  1. `samp`: A String Pattern of samples with the folder name convention of `samplename_<key>` where `key` is a 1-3 character string that represents the key signature of the sample. `key` takes the form `R[A][M]` where:
-      1. `R` is the root note (`c, d, e, f, g, a, b`)
-      2. `A` is the optional accidental (`b, s` for flat and sharp respectively)
-      3. `M` is the optional mode (`m` for minor, empty for major)
-  2. `targetKey` A String Pattern of key signature(s)
 
-and outputs a control pattern that pitches the samples according to the target key signatures.
+A Haskell helper for **key-aware sample playback** in TidalCycles. (A Strudel version will be coming soon!)
 
-Example:
+It works by reading a small key tag at the end of your sample names and automatically retuning them to whatever key you specify.
 
-`d1 $ pitchSample "pianoimp_eb pianoimp_fm" "c"`
-plays `pianoimp_eb` (an E flat major piano sample) and `pianoimp_fm` (a F minor piano sample) transposed to the key of C major.
+### How the key tag works
+
+Each sample folder ends with a short key tag, like:
+
+```
+_dm   _eb   _f   _gs   _bbm
+```
+
+The format is intentionally simple:
+
+- **Root note**: `c d e f g a b`
+- **Optional accidental**: `s` = sharp, `b` = flat  
+- **Optional `m`**: for minor (major is implied when omitted)
+
+Examples:
+- `_dm` → D minor  
+- `_eb` → E♭ major  
+- `_fs` → F♯ major  
+- `_bbm` → B♭ minor  
+
+### Usage
+
+```haskell
+d1 $ pitchSample "pianoimp_eb pianoimp_fm" "c"
+```
+
+This takes samples tagged as E♭ major and F minor, retunes them into **C major**, and plays the resulting pattern.
