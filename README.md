@@ -1,6 +1,9 @@
 # livecoding-utils
 A set of tools, scripts, and helper modules for TidalCycles, Strudel, and other livecoding environments. All code in this repository is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
 
+## Serum Strudel Helpers
+MIDI Map and some helper functions for controlling Serum 2 synths from Strudel via MIDI.
+
 ## PitchSample
 
 A Haskell helper for easy pitch transposition of samples in TidalCycles. (A Strudel version will be coming soon!)
